@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EmployeeDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="INCIDENT_BUSINESS_FUNCTION_LOOKUP">
+          <Key>
+            <PropertyRef Name="incident_business_id" />
+          </Key>
+          <Property Name="incident_business_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="INCIDENT_CATEGORY_LOOKUP">
+          <Key>
+            <PropertyRef Name="incident_category_id" />
+          </Key>
+          <Property Name="incident_category_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="incident_service_id" Type="bigint" />
+        </EntityType>
+        <EntityType Name="INCIDENT_SERVICE_LOOKUP">
+          <Key>
+            <PropertyRef Name="incident_service_id" />
+          </Key>
+          <Property Name="incident_service_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="incident_business_id" Type="bigint" />
+        </EntityType>
+        <Association Name="FK__INCIDENT___incid__3F466844">
+          <End Role="INCIDENT_BUSINESS_FUNCTION_LOOKUP" Type="Self.INCIDENT_BUSINESS_FUNCTION_LOOKUP" Multiplicity="0..1" />
+          <End Role="INCIDENT_SERVICE_LOOKUP" Type="Self.INCIDENT_SERVICE_LOOKUP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT_BUSINESS_FUNCTION_LOOKUP">
+              <PropertyRef Name="incident_business_id" />
+            </Principal>
+            <Dependent Role="INCIDENT_SERVICE_LOOKUP">
+              <PropertyRef Name="incident_business_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__INCIDENT___incid__4222D4EF">
+          <End Role="INCIDENT_SERVICE_LOOKUP" Type="Self.INCIDENT_SERVICE_LOOKUP" Multiplicity="0..1" />
+          <End Role="INCIDENT_CATEGORY_LOOKUP" Type="Self.INCIDENT_CATEGORY_LOOKUP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT_SERVICE_LOOKUP">
+              <PropertyRef Name="incident_service_id" />
+            </Principal>
+            <Dependent Role="INCIDENT_CATEGORY_LOOKUP">
+              <PropertyRef Name="incident_service_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EmployeeDBModelStoreContainer">
+          <EntitySet Name="INCIDENT_BUSINESS_FUNCTION_LOOKUP" EntityType="Self.INCIDENT_BUSINESS_FUNCTION_LOOKUP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="INCIDENT_CATEGORY_LOOKUP" EntityType="Self.INCIDENT_CATEGORY_LOOKUP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="INCIDENT_SERVICE_LOOKUP" EntityType="Self.INCIDENT_SERVICE_LOOKUP" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__INCIDENT___incid__3F466844" Association="Self.FK__INCIDENT___incid__3F466844">
+            <End Role="INCIDENT_BUSINESS_FUNCTION_LOOKUP" EntitySet="INCIDENT_BUSINESS_FUNCTION_LOOKUP" />
+            <End Role="INCIDENT_SERVICE_LOOKUP" EntitySet="INCIDENT_SERVICE_LOOKUP" />
+          </AssociationSet>
+          <AssociationSet Name="FK__INCIDENT___incid__4222D4EF" Association="Self.FK__INCIDENT___incid__4222D4EF">
+            <End Role="INCIDENT_SERVICE_LOOKUP" EntitySet="INCIDENT_SERVICE_LOOKUP" />
+            <End Role="INCIDENT_CATEGORY_LOOKUP" EntitySet="INCIDENT_CATEGORY_LOOKUP" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EmployeeDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="INCIDENT_BUSINESS_FUNCTION_LOOKUP">
+          <Key>
+            <PropertyRef Name="incident_business_id" />
+          </Key>
+          <Property Name="incident_business_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="INCIDENT_SERVICE_LOOKUP" Relationship="Self.FK__INCIDENT___incid__3F466844" FromRole="INCIDENT_BUSINESS_FUNCTION_LOOKUP" ToRole="INCIDENT_SERVICE_LOOKUP" />
+        </EntityType>
+        <EntityType Name="INCIDENT_CATEGORY_LOOKUP">
+          <Key>
+            <PropertyRef Name="incident_category_id" />
+          </Key>
+          <Property Name="incident_category_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="incident_service_id" Type="Int64" />
+          <NavigationProperty Name="INCIDENT_SERVICE_LOOKUP" Relationship="Self.FK__INCIDENT___incid__4222D4EF" FromRole="INCIDENT_CATEGORY_LOOKUP" ToRole="INCIDENT_SERVICE_LOOKUP" />
+        </EntityType>
+        <EntityType Name="INCIDENT_SERVICE_LOOKUP">
+          <Key>
+            <PropertyRef Name="incident_service_id" />
+          </Key>
+          <Property Name="incident_service_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="incident_business_id" Type="Int64" />
+          <NavigationProperty Name="INCIDENT_BUSINESS_FUNCTION_LOOKUP" Relationship="Self.FK__INCIDENT___incid__3F466844" FromRole="INCIDENT_SERVICE_LOOKUP" ToRole="INCIDENT_BUSINESS_FUNCTION_LOOKUP" />
+          <NavigationProperty Name="INCIDENT_CATEGORY_LOOKUP" Relationship="Self.FK__INCIDENT___incid__4222D4EF" FromRole="INCIDENT_SERVICE_LOOKUP" ToRole="INCIDENT_CATEGORY_LOOKUP" />
+        </EntityType>
+        <Association Name="FK__INCIDENT___incid__3F466844">
+          <End Role="INCIDENT_BUSINESS_FUNCTION_LOOKUP" Type="Self.INCIDENT_BUSINESS_FUNCTION_LOOKUP" Multiplicity="0..1" />
+          <End Role="INCIDENT_SERVICE_LOOKUP" Type="Self.INCIDENT_SERVICE_LOOKUP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT_BUSINESS_FUNCTION_LOOKUP">
+              <PropertyRef Name="incident_business_id" />
+            </Principal>
+            <Dependent Role="INCIDENT_SERVICE_LOOKUP">
+              <PropertyRef Name="incident_business_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__INCIDENT___incid__4222D4EF">
+          <End Role="INCIDENT_SERVICE_LOOKUP" Type="Self.INCIDENT_SERVICE_LOOKUP" Multiplicity="0..1" />
+          <End Role="INCIDENT_CATEGORY_LOOKUP" Type="Self.INCIDENT_CATEGORY_LOOKUP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT_SERVICE_LOOKUP">
+              <PropertyRef Name="incident_service_id" />
+            </Principal>
+            <Dependent Role="INCIDENT_CATEGORY_LOOKUP">
+              <PropertyRef Name="incident_service_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EmployeeDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="INCIDENT_BUSINESS_FUNCTION_LOOKUP" EntityType="Self.INCIDENT_BUSINESS_FUNCTION_LOOKUP" />
+          <EntitySet Name="INCIDENT_CATEGORY_LOOKUP" EntityType="Self.INCIDENT_CATEGORY_LOOKUP" />
+          <EntitySet Name="INCIDENT_SERVICE_LOOKUP" EntityType="Self.INCIDENT_SERVICE_LOOKUP" />
+          <AssociationSet Name="FK__INCIDENT___incid__3F466844" Association="Self.FK__INCIDENT___incid__3F466844">
+            <End Role="INCIDENT_BUSINESS_FUNCTION_LOOKUP" EntitySet="INCIDENT_BUSINESS_FUNCTION_LOOKUP" />
+            <End Role="INCIDENT_SERVICE_LOOKUP" EntitySet="INCIDENT_SERVICE_LOOKUP" />
+          </AssociationSet>
+          <AssociationSet Name="FK__INCIDENT___incid__4222D4EF" Association="Self.FK__INCIDENT___incid__4222D4EF">
+            <End Role="INCIDENT_SERVICE_LOOKUP" EntitySet="INCIDENT_SERVICE_LOOKUP" />
+            <End Role="INCIDENT_CATEGORY_LOOKUP" EntitySet="INCIDENT_CATEGORY_LOOKUP" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EmployeeDBModelStoreContainer" CdmEntityContainer="EmployeeDBEntities">
+          <EntitySetMapping Name="INCIDENT_BUSINESS_FUNCTION_LOOKUP">
+            <EntityTypeMapping TypeName="EmployeeDBModel.INCIDENT_BUSINESS_FUNCTION_LOOKUP">
+              <MappingFragment StoreEntitySet="INCIDENT_BUSINESS_FUNCTION_LOOKUP">
+                <ScalarProperty Name="incident_business_id" ColumnName="incident_business_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INCIDENT_CATEGORY_LOOKUP">
+            <EntityTypeMapping TypeName="EmployeeDBModel.INCIDENT_CATEGORY_LOOKUP">
+              <MappingFragment StoreEntitySet="INCIDENT_CATEGORY_LOOKUP">
+                <ScalarProperty Name="incident_category_id" ColumnName="incident_category_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="incident_service_id" ColumnName="incident_service_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INCIDENT_SERVICE_LOOKUP">
+            <EntityTypeMapping TypeName="EmployeeDBModel.INCIDENT_SERVICE_LOOKUP">
+              <MappingFragment StoreEntitySet="INCIDENT_SERVICE_LOOKUP">
+                <ScalarProperty Name="incident_service_id" ColumnName="incident_service_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="incident_business_id" ColumnName="incident_business_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
