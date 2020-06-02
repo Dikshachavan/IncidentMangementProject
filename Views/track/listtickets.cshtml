@@ -1,0 +1,23 @@
+﻿@model NewDemoProject.Models.incidentlist
+
+@using NewDemoProject.Models;
+
+
+@{
+    ViewBag.Title = "listtickets";
+}
+
+<h2>Incidents raised by you :</h2>
+
+<ul>
+    @foreach (incidentlist i in @Model.incidentarray)
+    {
+
+        @Html.ActionLink(i.title, "trackstatus", new { trackno = i.incidentID })
+        <br />
+
+    }
+</ul>
+
+
+

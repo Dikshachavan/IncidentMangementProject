@@ -1,0 +1,30 @@
+﻿@model NewDemoProject.Models.status
+
+@{
+    ViewBag.Title = "trackstatus";
+}
+
+<h2>trackstatus</h2>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+</head>
+<body>
+    @using (Html.BeginForm("trackstatus", "status", FormMethod.Get))
+    {
+        foreach (var item in Model.statuses)
+        {
+            <label>Assigned To : </label>@Html.DisplayFor(modelitem => item.assignedto)
+            <br />
+            <label>Current Status : </label> @Html.DisplayFor(modelitem => item.currstatus)
+
+        }
+
+    }
+</body>
+
+</html>
