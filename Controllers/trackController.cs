@@ -58,7 +58,7 @@ namespace NewDemoProject.Controllers
 
 
 
-        public ActionResult listtickets(string employeemailid)
+        public ActionResult listtickets(string Email_ID)
         {
         try
         {
@@ -66,7 +66,7 @@ namespace NewDemoProject.Controllers
             DataSet ds = new DataSet();
             SqlCommand cmd = new SqlCommand("listincidents", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@employee_mail_id", employeemailid);
+            cmd.Parameters.AddWithValue("@employee_mail_id", Email_ID);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             connection.Open(); da.Fill(ds);
             List<incidentlist> incidentlists = new List<incidentlist>();
