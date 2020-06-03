@@ -1,0 +1,38 @@
+﻿@model NewDemoProject.Models.incidentlist
+
+@{
+    ViewBag.Title = "OnSubmit";
+}
+
+<h2>Ticket(s) in my Queue</h2>
+
+<div class="container" style="background-color:antiquewhite">
+    <!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+</head>
+<body>
+    @using (Html.BeginForm("OnSubmit", "incidentlist", FormMethod.Get))
+    {
+        foreach (var item in Model.incidentarray)
+        {
+            <label>Incident Title :</label><b>@Html.DisplayFor(modelitem => item.title)</b>
+            <label>Incident Number  : INC</label>@Html.DisplayFor(modelitem => item.incidentID)
+
+            <br />
+            <label>Description : </label> @Html.DisplayFor(modelitem => item.incident_description)<br />
+            <label>Raised By : </label> @Html.DisplayFor(modelitem => item.raised_by)<br />
+            <label>Created On :</label> @Html.DisplayFor(modelitem => item.created_on)<br />
+            <label>Last Edited On :</label> @Html.DisplayFor(modelitem => item.altered_on)<br />
+
+        }
+
+    }
+</body>
+
+</html>
+</div>
+

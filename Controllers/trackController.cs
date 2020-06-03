@@ -1,13 +1,10 @@
-﻿using NewDemoProject.ViewModel;
+﻿using NewDemoProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 using System.Data;
-using NewDemoProject.Models;
+using System.Data.SqlClient;
+using System.Web.Mvc;
 
 
 namespace NewDemoProject.Controllers
@@ -20,7 +17,8 @@ namespace NewDemoProject.Controllers
         // GET: treack
         public ActionResult trackstatus(int trackno)
         {
-            try {
+            try
+            {
                 SqlCommand command = new SqlCommand("track_incident", connection);
                 DataSet ds = new DataSet();
                 command.CommandType = CommandType.StoredProcedure;
@@ -52,21 +50,55 @@ namespace NewDemoProject.Controllers
             }
 
         }
-        
-
-
-
 
 
         public ActionResult listtickets(string Email_ID)
         {
-        try
+            try
+            {
+                incidentlist incidents = new incidentlist();
+                DataSet ds = new DataSet();
+                SqlCommand cmd = new SqlCommand("listincidents", connection);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@employee_mail_id", Email_ID);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                connection.Open(); da.Fill(ds);
+                List<incidentlist> incidentlists = new List<incidentlist>();
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    incidentlist incidentlist = new incidentlist();
+                    incidentlist.incidentID = Convert.ToInt32(ds.Tables[0].Rows[i]["incident_id"]);
+                    incidentlist.title = ds.Tables[0].Rows[i]["incident_title"].ToString();
+                    incidentlists.Add(incidentlist);
+                }
+                incidents.incidentarray = incidentlists;
+                return View(incidents);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+
+        
+        public ActionResult OnSubmit(int incidentid)
         {
             incidentlist incidents = new incidentlist();
             DataSet ds = new DataSet();
-            SqlCommand cmd = new SqlCommand("listincidents", connection);
+            SqlCommand cmd = new SqlCommand("list_incident_onsubmit", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@employee_mail_id", Email_ID);
+            cmd.Parameters.AddWithValue("@incident_id", incidentid);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             connection.Open(); da.Fill(ds);
             List<incidentlist> incidentlists = new List<incidentlist>();
@@ -76,26 +108,27 @@ namespace NewDemoProject.Controllers
                 incidentlist incidentlist = new incidentlist();
                 incidentlist.incidentID = Convert.ToInt32(ds.Tables[0].Rows[i]["incident_id"]);
                 incidentlist.title = ds.Tables[0].Rows[i]["incident_title"].ToString();
+                incidentlist.incident_description = ds.Tables[0].Rows[i]["incident_descripton"].ToString();
+                incidentlist.raised_by = ds.Tables[0].Rows[i]["raised_by"].ToString();
+                
+                incidentlist.created_on = Convert.ToDateTime(ds.Tables[0].Rows[i]["created_on"]);
+                
+                    incidentlist.altered_on = Convert.ToDateTime(ds.Tables[0].Rows[i]["altered_on"]);
                 incidentlists.Add(incidentlist);
             }
             incidents.incidentarray = incidentlists;
             return View(incidents);
-        }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
-            catch (Exception e)
-        {
-            throw e;
-        }
-            
-        finally
-        {
-                connection.Close();
-         }
-            }
 
+            
         }
+
+
+
+
     }
+
+
+
+
+}
 
