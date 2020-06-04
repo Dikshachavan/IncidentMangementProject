@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+
 namespace NewDemoProject.Controllers
 {
     public class HomeController : Controller
@@ -12,8 +13,8 @@ namespace NewDemoProject.Controllers
         EmployeeDBEntities DBEntities = new EmployeeDBEntities();
         public ActionResult Index()
         {
-            List<INCIDENT_BUSINESS_FUNCTION_LOOKUP> Business_Function = DBEntities.INCIDENT_BUSINESS_FUNCTION_LOOKUP.ToList();
-            return View();
+            Employee em = new Employee();
+            return View(em);
         }
 
         public ActionResult About()

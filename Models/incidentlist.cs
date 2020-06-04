@@ -11,6 +11,23 @@ namespace NewDemoProject.Models
 
         public string title { get; set; }
 
+        public string incident_description { get; set; }
+
+        public string raised_by { get; set; }
+
+        public DateTime? created_on { get; set; }
+
+        public DateTime? altered_on { get; set; }
+
+        public string status { get; set; }
+
+        public string SupportedBy { get; set; }
+
+        
+
         public List<incidentlist> incidentarray { get; set; }
+
+        
+
     }
 }

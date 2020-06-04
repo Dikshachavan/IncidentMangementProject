@@ -328,6 +328,7 @@
     <Content Include="Views\CreateIncident\CreateIncident.cshtml" />
     <Content Include="Views\track\trackstatus.cshtml" />
     <Content Include="Views\track\listtickets.cshtml" />
+    <Content Include="Views\track\OnSubmit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
