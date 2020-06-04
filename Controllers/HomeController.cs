@@ -12,7 +12,7 @@ namespace NewDemoProject.Controllers
         EmployeeDBEntities DBEntities = new EmployeeDBEntities();
         public ActionResult Index()
         {
-            //List<INCIDENT_BUSINESS_FUNCTION_LOOKUP> Business_Function = DBEntities.INCIDENT_BUSINESS_FUNCTION_LOOKUP.ToList();
+            List<INCIDENT_BUSINESS_FUNCTION_LOOKUP> Business_Function = DBEntities.INCIDENT_BUSINESS_FUNCTION_LOOKUP.ToList();
             return View();
         }
 
