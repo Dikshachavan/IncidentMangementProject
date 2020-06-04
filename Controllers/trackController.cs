@@ -92,13 +92,13 @@ namespace NewDemoProject.Controllers
 
 
         
-        public ActionResult OnSubmit(int incidentid)
+        public ActionResult OnSubmit(string Email_ID)
         {
             incidentlist incidents = new incidentlist();
             DataSet ds = new DataSet();
-            SqlCommand cmd = new SqlCommand("list_incident_onsubmit", connection);
+            SqlCommand cmd = new SqlCommand("listincidents", connection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@incident_id", incidentid);
+            cmd.Parameters.AddWithValue("@employee_mail_id", Email_ID);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             connection.Open(); da.Fill(ds);
             List<incidentlist> incidentlists = new List<incidentlist>();
@@ -110,10 +110,13 @@ namespace NewDemoProject.Controllers
                 incidentlist.title = ds.Tables[0].Rows[i]["incident_title"].ToString();
                 incidentlist.incident_description = ds.Tables[0].Rows[i]["incident_descripton"].ToString();
                 incidentlist.raised_by = ds.Tables[0].Rows[i]["raised_by"].ToString();
+                incidentlist.status = ds.Tables[0].Rows[i]["stage"].ToString();
+                incidentlist.SupportedBy = ds.Tables[0].Rows[i]["handler_name"].ToString();
                 
+                if (!Convert.IsDBNull(ds.Tables[0].Rows[i]["created_on"]))
                 incidentlist.created_on = Convert.ToDateTime(ds.Tables[0].Rows[i]["created_on"]);
-                
-                    incidentlist.altered_on = Convert.ToDateTime(ds.Tables[0].Rows[i]["altered_on"]);
+                if (!Convert.IsDBNull(ds.Tables[0].Rows[i]["altered_on"]))
+                incidentlist.altered_on = Convert.ToDateTime(ds.Tables[0].Rows[i]["altered_on"]);
                 incidentlists.Add(incidentlist);
             }
             incidents.incidentarray = incidentlists;

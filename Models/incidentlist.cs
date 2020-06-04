@@ -19,6 +19,12 @@ namespace NewDemoProject.Models
 
         public DateTime? altered_on { get; set; }
 
+        public string status { get; set; }
+
+        public string SupportedBy { get; set; }
+
+        
+
         public List<incidentlist> incidentarray { get; set; }
 
         
